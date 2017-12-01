@@ -1,0 +1,219 @@
+/*Global*/
+
+html {
+	width: 100%;
+	height: 100%;
+	/*屏幕旋转的时候保证文字不改变*/
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+}
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	background: #47c9af;
+	color: #74777b;
+	font-weight: 300;
+	font-size: 1.5em;
+	font-family: "Raleway";
+}
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+a:link, a:visited, a:focus {
+	text-decoration: none;
+	outline: none;
+}
+
+/*
+	:after 在被选择元素的内容后面插入内容
+	:before 在被选择元素的内容前面插入内容
+	content属性指定要插入的内容
+*/
+/* 
+	保证任何填充内容都不改变box大小，即：
+	width = border + padding + content width，
+	height = border + padding + content height
+	https://developer.mozilla.org/zh-CN/docs/Web/CSS/box-sizing
+*/
+*, *:after, *:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+}
+*:after, *:before {
+	display: block; /*插入的内容都是块元素*/
+	content: "";
+}
+*：after { clear: both; }
+
+
+/*Navigator*/
+
+.nav {
+	width: 800px;
+	height: 300px;
+	margin: 200px auto;
+}
+.nav li {
+	display: inline-block;
+	/*	
+		简单来说就是将对象呈现为inline对象，
+		但是对象的内容作为block对象呈现。
+		之后的内联对象会被排列在同一行内。
+		比如我们可以给一个link（a元素）inline-block属性值，
+		使其既具有block的宽度高度特性又具有inline的同行特性
+	*/
+	margin: 0 1em;
+}
+
+.tooltip {
+	display: inline-block;
+	font-weight: 700;
+	color: rgba(0,0,0,0.3);
+	/*
+		RGBA 颜色值是这样规定的：rgba(red, green, blue, alpha)。
+		alpha 参数是介于 0.0（完全透明）与 1.0（完全不透明）的数字。
+	*/
+	padding: 0.15em 0.25em 0 0;
+	position: relative;
+	z-index: 999;
+	-webkit-transition: color 0.3s; /*使color属性具有过度的效果*/
+	transition: color 0.3s;
+
+	/*用于测试*/
+	/*background: red; */
+}
+.tooltip:hover {
+	color: rgba(255,255,255,1);
+}
+
+.tooltip-content {
+	position: absolute;	/*相对于其父元素a定位；定义absolute后会自动变为块元素*/
+	z-index: 9999;
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	background: #fff;
+	left: 50%;	/*距离整个a左边一半的距离,可以看到白色的圆未居中，需要向左移动圆宽度的一半*/
+	margin-left: -40px;
+	bottom: 100%;	/*圆出现在上部，定义bottom。由于定位的缘故，bottom=0%表示圆的底与a底对齐，bottom=100%表示圆的底距离a的底为a的高*/
+	margin-bottom: 20px;
+	text-align: center;
+	padding-top: 25px;
+	color: #47c9af;
+	opacity: 0; /*隐藏气泡，为了显得动画效果不生硬，我们采用透明度的方法来设置*/
+	-webkit-transition: opacity 0.3s, -webkit-transform 0.3s; /*使opacity,-webkit-transform具有过度效果*/
+	transition: opacity 0.3s, transform 0.3s;
+}
+.tooltip .tooltip-content i { 
+	opacity: 0;
+	-webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+	transition: opacity 0.3s, transform 0.3s; 
+}
+.tooltip-content::after {
+	display: block;
+	content: "";
+	width: 30px;
+	height: 20px;
+	background: url(../img/tooltip1.svg) no-repeat center center;
+	background-size: 100%;
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin: -7px 0 0 -15px;
+}
+
+/*
+	transform:向元素应用2D 3D效果;
+	transform:none|transform-functions;
+	translate3d(x,y,z) 转化;
+	rotate3d(x,y,z,angle) 旋转;
+	scale3d(x,y,z) 缩放，特别需要注意的是x,y如果为0时没办法体现出缩放效果，需要设置为0.01;
+	需要注意浏览器兼容性。
+*/
+/*
+	transition:在一定的时间区间内平滑地国度指定的属性值;
+	transition: property duration timing-function delay;
+	property: 规定过渡效果的css属性名称;
+	duration: 规定完成过度效果的时间;
+	timing-function: 规定速度效果的速度曲线;
+	transition-delay: 定义过度何时开始;
+	考虑浏览器兼容性。
+*/
+.tooltip-effect-1 .tooltip-content {
+	-webkit-transform: translate3d(0,10px,0) rotate3d(1,1,1,45deg); 
+	transform: translate3d(0,10px,0) rotate3d(1,1,1,45deg); 
+	/*
+		translate3d:系数为px值，y轴+10px表示向下移动;
+		rotate3d:系数是0-1之间的数字,旋转时ax+by+cz（a,d,c为设置的系数）三个坐标轴合成的直线为旋转轴，且默认以图形的中心点为原点旋转;
+	*/
+	-webkit-transform-origin: center bottom;
+	transform-origin: center bottom;
+	/*调整旋转中心点，可以是百分比50% 100% 0%，或者center bottom top等,只需要在旋转，斜切，缩放的时候注意中心点*/
+}
+.tooltip-effect-1 .tooltip-content i {
+	-webkit-transform: scale3d(0.01,0.01,1); 
+	transform: scale3d(0.01,0.01,1);
+}
+
+.tooltip-effect-2 .tooltip-content {
+	-webkit-transform: translate3d(0,20px,0); 
+	transform: translate3d(0,20px,0); 
+}
+.tooltip-effect-2 .tooltip-content i {
+	-webkit-transform: translate3d(0,15px,0); 
+	transform:  translate3d(0,15px,0);
+}
+
+.tooltip-effect-3 .tooltip-content {
+	-webkit-transform: translate3d(0,10px,0) rotate3d(0,1,0,90deg); 
+	transform: translate3d(0,10px,0) rotate3d(0,1,0,90deg); 
+	-webkit-transform-origin: center bottom;
+	transform-origin: center bottom;
+}
+.tooltip-effect-3 .tooltip-content i {
+	-webkit-transform: scale3d(0.01,0.01,1); 
+	transform: scale3d(0.01,0.01,1);
+}
+
+.tooltip-effect-4 .tooltip-content {
+	-webkit-transform: translate3d(0,-20px,0); 
+	transform: translate3d(0,-20px,0); 
+}
+.tooltip-effect-4 .tooltip-content i {
+	-webkit-transform: translate3d(0,20px,0); 
+	transform:  translate3d(0,20px,0);
+}
+
+.tooltip-effect-5 .tooltip-content {
+	-webkit-transform: scale3d(0.01,0.01,1); 
+	transform: scale3d(0.01,0.01,1); 
+	-webkit-transform-origin: center bottom;
+	transform-origin: center bottom;
+}
+.tooltip-effect-5 .tooltip-content i {
+	-webkit-transform: translate3d(0,20px,0); 
+	transform:  translate3d(0,20px,0);
+}
+
+.tooltip:hover .tooltip-content,
+.tooltip:hover .tooltip-content i {
+	opacity: 1;	
+	-webkit-transform: translate3d(0,0,0) rotate3d(1,1,1,0) scale3d(1,1,1);
+	transform: translate3d(0,0,0) rotate3d(1,1,1,0) scale3d(1,1,1);
+}
+
+
+
+
+
+

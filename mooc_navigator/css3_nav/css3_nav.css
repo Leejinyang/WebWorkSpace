@@ -1,0 +1,137 @@
+ul {
+	list-style-type: none;
+}
+.top-nav {
+	width: 960px;
+	margin: 60px auto;
+	border: 1px solid #222;
+	background-color: #111;
+	background-image: linear-gradient(#444, #111);
+	border-radius: 6px;
+	box-shadow: 0 1px 1px #777;
+	/*水平 垂直 阴影程度 颜色*/
+	padding: 0;
+}
+
+/*清除子元素浮动*/
+.top-nav:before, .top-nav:after {
+	content: " ";
+	display: block;
+}
+.top-nav:after {
+	clear: both;
+}
+
+.top-nav li {
+	float: left;
+	border-right: 1px solid #222;
+	box-shadow: 1px 0 0 #444;
+	position: relative;
+}
+
+.top-nav li a {
+	float: left;
+	padding: 12px 30px;
+	color: #999;
+	text-decoration: none;
+	text-shadow: 0 1px 0 #000;
+}
+
+.top-nav li a:hover {
+	color: #fafafa;
+}
+
+.top-nav li ul {
+	visibility: hidden;
+	position: absolute;
+	top: 38px;
+	left: 0;
+	z-index: 1;
+	padding: 0;
+	background-color: #444;
+	background-image: linear-gradient(#444, #111);
+	box-shadow: 0 -1 0 rgba(255,255,255,0.3);
+	border-radius: 10px;
+	opacity: 0;
+	margin: 20px 0 0 0;
+	/*二级菜单下移20px*/
+	transition: all 0.2s ease-in-out;	 
+}
+.top-nav li:hover > ul {
+	opacity: 1;
+	visibility: visible;
+	margin: 0;
+}
+
+/*二级菜单*/
+.top-nav ul li {
+	float: none;
+	display: block;
+	border: 0;
+	box-shadow: 0 -1px 0 #111, 0 1px 0 #666;
+	/*-1表示阴影向上显示*/
+	/*此处会使显示存在不好看的地方*/
+}
+
+.top-nav ul a {
+	padding: 10px;
+	width: 130px;
+	display: block;
+	float: none;
+}
+
+.top-nav ul a:hover {
+	background-color: #0186ba;
+	background-image: linear-gradient(#04acec,#0186ba);
+}
+
+/*选择属于其父元素的首个子元素的每个<li>元素*/
+.top-nav ul li:first-child > a {
+	border-radius: 10px 10px 0 0;
+	/*background-color: red;*/
+}
+.top-nav ul li:last-child > a {
+	border-radius: 0 0 10px 10px;
+	/*background-color: blue;*/
+}
+
+/*实现三角*/
+.top-nav ul li:first-child > a:before {
+	content: "";
+	position: absolute;
+	left: 40px;
+	top: -6px;
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-bottom: 6px solid #444;
+	/*background-color: red;*/
+} 
+
+.top-nav ul li:first-child > a:hover:before {
+	border-bottom-color: #04acec; 
+}
+
+/*三级菜单*/
+.top-nav ul ul {
+	position: absolute;
+	top: 0;
+	left: 150px;
+	margin: 0 0 0 20px;
+	box-shadow: -1px 0 0 rgba(255,255,255,0.3);
+}
+.top-nav ul ul li:first-child a:before {
+	left: -6px;
+	top: 50%;
+	margin-top: -6px;
+	border-left: 0;
+	border-bottom: 6px solid transparent;
+	border-top: 6px solid transparent;
+	border-right: 6px solid #3b3b3b;
+	/*background-color: red;*/
+}
+.top-nav ul ul li:first-child a:hover:before {
+
+	border-right-color: #0299d3;
+	border-bottom-color: transparent;
+	/*将从109行继承过来的颜色删去*/
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<title>js mouse event</title>
+	<meta charset="utf-8" />
+	<meta name="keyword" content="navigator" />
+	<meta name="author" content="lee" />
+	<meta name="date" content="2017/10/17" />
+	<meta name="generator" content="sublime text 3" />
+	<style type="text/css">
+		div {
+			background-color: green;
+			color: #ffffff;
+			width: 120px;
+			height: 50px;
+			margin: 0 auto;
+			padding: 10px;
+			font-size: 16px;
+			font-family: "微软雅黑";
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	
+<div id="mouse">请点击这里</div>
+
+<script>
+document.getElementById("mouse").onmousedown=function() {mDown()};
+document.getElementById("mouse").onmouseup=function() {mUp()};
+
+function mDown()
+{
+document.getElementById("mouse").style.backgroundColor="#1ec5e5";
+document.getElementById("mouse").innerHTML="请释放鼠标按钮";
+}
+
+function mUp()
+{
+document.getElementById("mouse").style.backgroundColor="green";
+document.getElementById("mouse").innerHTML="请点击鼠标按钮";
+}
+</script>
+
+</body>

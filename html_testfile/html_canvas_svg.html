@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<title>html_canvas_svg</title>
+<meta charset="utf-8" />
+<meta name="keyword" content="HTML, CSS" />
+<meta name="author" content="lee" />
+<meta name="date" content="2017/9/28" />
+<meta name="generator" content="sublime text 3" />
+<base target="_blank" />
+<style type="text/css">
+	#coordiv {
+		float: left;
+		width: 199px;
+		height: 99px;
+		border: 1px solid #c3c3c3;
+	}
+	#myCanvas {
+		border: 1px solid #123123;
+		width: 200px;
+		height: 150px;
+	}
+</style>
+<script type="text/javascript">
+	function cnvs_getCoordinates(e) {
+		x=e.clientX;
+		y=e.clientY;
+		document.getElementById("xycoordinates").innerHTML="Coordnates:("+x+","+y+")";
+	}
+	function cnvs_clearCoordinates() {
+		document.getElementById("xycoordinates").innerHTML="";
+	}
+</script>
+
+<body>
+
+<div id="coordiv" onmousemove="cnvs_getCoordinates(event)" onmouseout="cnvs_clearCoordinates()"></div>
+<div id="xycoordinates"></div>
+
+<canvas id="myCanvas"></canvas>
+<script type="text/javascript">
+	var c=document.getElementById("myCanvas");
+	var cxt=c.getContext("2d");
+	cxt.fillStyle="#ff0000";
+	cxt.fillRect(20, 30, 150, 75);
+</script>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="190">
+   <polygon points="100,10 40,180 190,60 10,60 160,180"
+   style="fill:red;stroke:blue;stroke-width:3;fill-rule:evenodd;" />
+</svg>
+</body>
+</html>

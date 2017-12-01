@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>canvas保存文件</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+		}
+	</style>
+	<script type="text/javascript">
+		function draw(id) {
+			var canvas = document.getElementById(id);
+			var context= canvas.getContext('2d');
+			context.fillStyle = 'green';
+			context.fillRect(0,0,400,300);
+			// window.location = canvas.toDataURL('image/png');有问题
+			var imgURI = canvas.toDataURL('image/png');
+			var image =document.createElement("img");
+			image.src = imgURI;
+			document.body.appendChild(image);
+		}
+	</script>
+</head>
+<body onload="draw('canvas')">
+
+<canvas id="canvas" width="400" height="300"></canvas>
+
+</body>
+</html>

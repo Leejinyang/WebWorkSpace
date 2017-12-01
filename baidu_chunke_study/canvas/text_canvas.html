@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>canvas绘制文字</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+		}
+	</style>
+	<script type="text/javascript">
+		function draw(id) {
+			var canvas = document.getElementById(id);
+			var context = canvas.getContext('2d');
+			context.fillStyle = 'green';
+			context.fillRect(0,0,800,300);
+			context.fillStyle = '#fff';
+			context.strokeStyle = "#fff";
+			// 设置文字格式：粗细 大小 字体
+			// context.font ="700 40px 微软雅黑";
+			context.font ="700 40px '微软雅黑','宋体'";
+
+			// 文字垂直方式，在没设置对齐方式时，如果文字位置为0,0，则文字会超出画布上边线
+			// top hanging middle bottom alphabetic(default value)
+			context.textBaseline = 'hanging';
+			// 文字水平对齐方式
+			// start(default value) end center left right
+			context.textAlign = 'start';
+			// 绘制文字，两种方法（文字，坐标）
+			context.fillText('欢迎收看麦子学院推出的',10,40);
+			context.fillText('《HTML5+CSS3轻松入门与实战》',40,110);
+			context.fillText('视频教程',580,180);
+			context.fillText('123456789111121314151617181920212223242526272829',0,220,800);
+			// 0,200是坐标，800是防止溢出，可以压缩文字使文字完全显示在画布里
+			// context.strokeText('麦子学院',0,40);
+
+		}
+	</script>
+</head>
+<body onload="draw('canvas')">
+
+<canvas id="canvas" width="800" height="300"></canvas>
+
+</body>
+</html>

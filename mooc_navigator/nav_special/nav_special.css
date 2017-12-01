@@ -1,0 +1,46 @@
+.navlist {
+	position: absolute;
+	top: 10px;
+	margin-left: 20%;
+}
+a {
+	text-decoration: none;
+	color: #fff;
+}
+.navlist a {
+	margin-left: 60px;
+	color: #666;
+}
+
+.expand {
+	height: 0;
+	/*height: 130px;*/
+	background-color: #333d4d;
+	overflow: hidden;
+	position: relative;
+	top: 30px;
+	width: 100%;
+}
+.expdiv {
+	height: 130px;
+	width: 500%;
+	/*margin-left: -200%;*/
+	/*jq中通过控制margin-left来决定显示哪一个下拉菜单*/
+}
+.expdiv-list {
+	width: 20%;
+	text-align: center;
+	float: left;
+	line-height: 110px;
+	color: #fff;
+}
+.expand .close-btn {
+	width: 120px;
+	height: 20px;
+	background: url(images/broswer_home.png) no-repeat -13px -117px;
+	position: absolute;
+	left: 50%;
+	margin-left: -60px;
+	bottom: -2px;
+	cursor: pointer;
+}

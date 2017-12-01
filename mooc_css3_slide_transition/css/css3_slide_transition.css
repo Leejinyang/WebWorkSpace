@@ -1,0 +1,491 @@
+/*
+	@font-face将自定义的web字体嵌入到网页中
+	用于定义特殊字体
+*/
+@font-face {
+	font-family: "Raphaelicons";
+	src: url('fonts/raphaelicons-webfont.eot') format('eot'),
+		 url('fonts/raphaelicons-webfont.svg') format('svg'),
+		 url('fonts/raphaelicons-webfont.ttf') format('truetype'),
+		 url('fonts/raphaelicons-webfont.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+	font-family: Georgia, serif;
+	background-color: #ddd;
+	font-weight: 400;
+	font-style: 15px;
+	color: #333;
+	overflow: hidden; /*溢出隐藏，没有该选项则会出现垂直滚动条*/
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-o-font-smoothing: antialiased;
+	-ms-font-smoothing: antialiased; 
+	font-smoothing: antialiased;
+	/* 
+		用于设置字体的抗锯齿或者说光滑度属性；
+		font-smoothing:subpixel-antialiased|none|antialiased;
+		取值说明：浏览器默认的，小像素文本，反锯齿；
+	*/
+}
+
+/*导航目录*/
+a {
+	text-decoration: none;
+	color: #555;
+}
+
+.clr {
+	width: 0;
+	height: 0;
+	overflow: hidden;
+	clear: both;
+	padding: 0;
+	margin: 0;
+}
+
+.st-container {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	font-family: "Josefin Slab", "Myriad Pro", Arial;
+}
+
+/*“>”子元素选择器,只选择当前元素的子元素*/
+.st-container > input,
+.st-container > a {
+	/*百分比定义宽度会使导航随着浏览器缩放做相应的变化*/
+	width: 20%;
+	/*input和a现在都是一样的宽度，所以点击导航旁边时（不一定要点正中间的单选按钮）也会进行切换*/
+	height: 34px;
+	line-height: 34px;
+	position: fixed;
+	bottom: 0;
+	/*到此为止，所有的input都会集中在左下角，是因为他们都相对于同一个父元素做了定位*/	
+	cursor: pointer; 
+}
+
+.st-container > input {
+	/*
+		隐藏元素：
+		1 dispaly:none; 隐藏不占位
+		2 position:absolute;
+		  left:-99999px; 不建议使用
+		3 visibility:hidden; 隐藏占位
+		4 opacity:0; 透明度为0
+	*/
+	opacity: 0;
+	z-index: 1000;
+	/*
+		设置优先级，数字越大优先级越高
+		其目的在于使得连接a及单选按钮在同一位置的不同图层显示
+	*/
+}
+
+.st-container > a {
+	z-index: 10;
+	font-weight: 700;
+	font-size: 18px;
+	background-color: #e23a6e;
+	text-align: center;
+	color: #fff;
+	text-shadow: 1px 1px 1px rgba(151,24,64,0.2);
+	/*阴影设置：水平 垂直 模糊程度*/
+}
+
+#st-control-1, #st-control-1 + a {
+	left: 0%;
+}
+#st-control-2, #st-control-2 + a {
+	left: 20%;
+}
+#st-control-3, #st-control-3 + a {
+	left: 40%;
+}
+#st-control-4, #st-control-4 + a {
+	left: 60%;
+}
+#st-control-5, #st-control-5 + a {
+	left: 80%;
+}
+
+/*input:checked 匹配单选按钮被选中的元素*/
+.st-container input:checked + a, 
+.st-container input:checked:hover + a{
+	background-color: #821134;
+}
+
+/*动态生成三角形*/
+/*
+	http://caibaojian.com/css-border-triangle.html 
+	css实现三角形教程
+*/
+.st-container input:checked + a:after {
+	content: "";
+	width: 0;
+	height: 0;
+	overflow: hidden;
+	border: 20px solid transparent;
+	border-bottom-color: #821134;
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	margin-left: -20px;
+	/*border是20，但其实三角形底边长为 左边距+右边距=20+20=40*/
+}
+
+/*鼠标滑过的时候产生变化*/
+.st-container input:hover + a{
+	background: #ad244f;
+	/*此时不选中与不选中的单选按钮均具有效果*/
+	/*要使checked的滑块不在发送颜色改变，则需要设置checked的滑块的当前颜色，请见第97行*/
+}
+
+/*内容*/
+.st-scroll,
+.st-panel {
+	width: 100%;
+	height: 100%;
+	position: relative;
+
+}
+
+/*页面的切换改变的不是section的位置，而是st-scroll（包含5个section）的位置*/
+.st-scroll {
+	left: 0;
+	top: 0;
+	-webkit-transform: translate3d(0,0,0); /*平移，用3d的原因是可以开启GPU加速*/
+	-moz-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+	/*
+		backface-visibility:定义当元素不面向屏幕时是否可见
+		backface-visibility:visible|hidden;
+		取值说明：背面是可见的|背面是不可见的
+	*/
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-o-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
+	backface-visibility: hidden;
+	/*过渡，改变谁，在谁上定义*/
+	/*ease-in-out: 变化速度：慢-快-慢*/
+	-webkit-transition: transform 0.6s ease-in-out;
+	-moz-transition: transform 0.6s ease-in-out;
+	-o-transition: transform 0.6s ease-in-out;
+	-ms-transition: transform 0.6s ease-in-out;
+	transition: transform 0.6s ease-in-out;
+}
+
+.st-panel {
+	background-color: #fff;
+	overflow: hidden;
+}
+
+/*点击导航，跳转到相应界面*/
+/*
+	“+” 只匹配当前元素后面紧跟的同一级元素
+	“~” 会匹配当前元素后边的所有同一级元素
+*/
+#st-control-1:checked ~ .st-scroll {
+	-webkit-transform: translateY(0%);
+	-moz-transform: translateY(0%);
+	-o-transform: translateY(0%);
+	-ms-transform: translateY(0%);
+	transform: translateY(0%);
+}
+#st-control-2:checked ~ .st-scroll {
+	/*st-scorll向上移动需要设置负值*/
+	-webkit-transform: translateY(-100%);
+	-moz-transform: translateY(-100%);
+	-o-transform: translateY(-100%);
+	-ms-transform: translateY(-100%);
+	transform: translateY(-100%);
+}
+#st-control-3:checked ~ .st-scroll {
+	-webkit-transform: translateY(-200%);
+	-moz-transform: translateY(-200%);
+	-o-transform: translateY(-200%);
+	-ms-transform: translateY(-200%);
+	transform: translateY(-200%);
+}
+#st-control-4:checked ~ .st-scroll {
+	-webkit-transform: translateY(-300%);
+	-moz-transform: translateY(-300%);
+	-o-transform: translateY(-300%);
+	-ms-transform: translateY(-300%);
+	transform: translateY(-300%);
+}
+#st-control-5:checked ~ .st-scroll {
+	-webkit-transform: translateY(-400%);
+	-moz-transform: translateY(-400%);
+	-o-transform: translateY(-400%);
+	-ms-transform: translateY(-400%);
+	transform: translateY(-400%);
+}
+
+/*由于三角形中还有内容，故不推荐采用broder的方法实现三角形*/
+.st-desc {
+	width: 200px;
+	height: 200px;
+	background-color: #fa96b5;
+	position: absolute;
+	left: 50%;
+	top: 0;
+	margin-left: -100px;
+	/*translateY（-50%）向上移动自身高度的一半*/
+	-webkit-transform: translateY(-50%) rotate(45deg);
+	-moz-transform: translateY(-50%) rotate(45deg);
+	-o-transform: translateY(-50%) rotate(45deg);
+	-ms-transform: translateY(-50%) rotate(45deg);
+	transform: translateY(-50%) rotate(45deg);
+}
+
+/*属性选择器，寻找所有含有data-icon的属性*/
+[data-icon]:after {
+	content: attr(data-icon);
+	width: 200px;
+	height: 200px;
+	/*background-color: #0f0; */
+	/*bgc是用于测试的*/
+	color: #fff;
+	font-size: 90px;
+	text-align: center;
+	line-height: 200px;
+	position: absolute;
+	/*水平，垂直居中*/
+	left: 50%;
+	top: 50%;
+	/*到此为止由于父盒子旋转45deg，则里面的文字也旋转45deg*/
+	margin: -100px 0 0 -100px;
+	/*
+		进行移动的坐标系为旋转45deg后的坐标系；
+		还可以这么理解，定位是对left以及top操作，故利用margin做“居中”操作的时候只需要对left，top操作
+	*/
+	/*注意先旋转，再平移*/
+	-webkit-transform: rotate(-45deg) translateY(25%);
+	-moz-transform:  rotate(-45deg) translateY(25%);
+	-o-transform:  rotate(-45deg) translateY(25%);
+	-ms-transform:  rotate(-45deg) translateY(25%);
+	transform:  rotate(-45deg) translateY(25%);
+	font-family: "Raphaelicons"; /*该字体用于产生特殊的图标*/
+	text-shadow: 1px 1px 1px rgba(151,24,64,0.2);
+}
+
+.st-panel h2 {
+	color: #e23a6e;
+	font-size: 54px;
+	line-height: 50px;
+	text-align: center;
+	font-weight: 900;
+	width: 80%;
+	position: absolute;
+	left: 10%;
+	top: 50%;
+	margin-top: -70px;
+	text-shadow: 1px 1px 1px rgba(151,24,64,0.2);
+	-webkit-backface-visibility: hidden;
+}
+/*
+	选中页面的h2才具有动画；
+	如果直接在h2上定义动画，则会在所有页面上产生动画效果
+*/
+/*
+	“~”“+” 会匹配同一级元素，所谓同一级：
+	st-control-1与st-scroll为同一级，
+	st-control-1与st-panel-1则不是同一级元素,
+	st-panel-1是st-scroll的子元素
+*/
+/*
+	何时采用animation or transition:
+	transition实现的动画需要事件触发，如鼠标点击，鼠标经过等；
+	animation则不需要任何事件触发，即一打开新页面就开始播放；
+	此处虽然点击了导航，但这个事件不是用于去触发页面内的动画，而是告诉浏览器去切换页面，
+	而在切换页面之后，当前页面内动画自动播放，这个动画没有任何事件去触发，故需要animation实现。
+*/
+/*
+	animation: name duration timing-function delay iteration-count direction;
+	参数说明：动画名字（@keyframes），持续时间，速度曲线，开始前延迟，播放次数，是否轮流反向播放；
+*/
+#st-control-1:checked ~ .st-scroll #st-panel-1 h2,
+#st-control-2:checked ~ .st-scroll #st-panel-2 h2,
+#st-control-3:checked ~ .st-scroll #st-panel-3 h2,
+#st-control-4:checked ~ .st-scroll #st-panel-4 h2,
+#st-control-5:checked ~ .st-scroll #st-panel-5 h2 {
+	-webkit-animation: moveDown 0.6s ease-in-out 0.2s backwards;
+	-moz-animation: moveDown 0.6s ease-in-out 0.2s backwards;
+	-o-animation: moveDown 0.6s ease-in-out 0.2s backwards;
+	-ms-animation: moveDown 0.6s ease-in-out 0.2s backwards;
+	animation: moveDown 0.6s ease-in-out 0.2s backwards;
+	/*backwards告诉动画在开始之前处于开始状态*/
+}
+@-webkit-keyframes moveDown {
+	/*按照帧定义，即你的动画需要几部分过程*/
+	0% {
+		-webkit-transform: translateY(-40px);
+		opacity: 0;
+	}
+	100% {
+		-webkit-transform: translateY(0px);
+		opacity: 1;
+	}
+}
+@-moz-keyframes moveDown {
+	0% {
+		-moz-transform: translateY(-40px);
+		opacity: 0;
+	}
+	100% {
+		-moz-transform: translateY(0px);
+		opacity: 1;
+	}
+}
+@-o-keyframes moveDown {
+	0% {
+		-o-transform: translateY(-40px);
+		opacity: 0;
+	}
+	100% {
+		-o-transform: translateY(0px);
+		opacity: 1;
+	}
+}
+@keyframes moveDown {
+	0% {
+		transform: translateY(-40px);
+		opacity: 0;
+	}
+	100% {
+		transform: translateY(0px);
+		opacity: 1;
+	}
+}
+
+.st-panel p {
+	position: absolute;
+	width: 50%;
+	left: 25%;
+	top: 50%;
+	font-size: 16px;
+	line-height: 22px;
+	padding: 0;
+	text-align: center;
+	-webkit-backface-visibility: hidden;
+	color: #8b8b8b;
+	margin-top: 10px;
+}
+
+#st-control-1:checked ~ .st-scroll #st-panel-1 p,
+#st-control-2:checked ~ .st-scroll #st-panel-2 p,
+#st-control-3:checked ~ .st-scroll #st-panel-3 p,
+#st-control-4:checked ~ .st-scroll #st-panel-4 p,
+#st-control-5:checked ~ .st-scroll #st-panel-5 p {
+	-webkit-animation: moveUp 0.6s ease-in-out 0.2s backwards;
+	-moz-animation: moveUp 0.6s ease-in-out 0.2s backwards;
+	-o-animation: moveUp 0.6s ease-in-out 0.2s backwards;
+	-ms-animation: moveUp 0.6s ease-in-out 0.2s backwards;
+	animation: moveUp 0.6s ease-in-out 0.2s backwards;
+	/*backwards告诉动画在开始之前处于开始状态*/
+}
+@-webkit-keyframes moveUp {
+	0% {
+		-webkit-transform: translateY(40px);
+		opacity: 0;
+	}
+	100% {
+		-webkit-transform: translateY(0px);
+		opacity: 1;
+	}
+}
+@-moz-keyframes moveUp {
+	0% {
+		-moz-transform: translateY(40px);
+		opacity: 0;
+	}
+	100% {
+		-moz-transform: translateY(0px);
+		opacity: 1;
+	}
+}
+@-o-keyframes moveUp {
+	0% {
+		-o-transform: translateY(40px);
+		opacity: 0;
+	}
+	100% {
+		-o-transform: translateY(0px);
+		opacity: 1;
+	}
+}
+@keyframes moveUp {
+	0% {
+		transform: translateY(40px);
+		opacity: 0;
+	}
+	100% {
+		transform: translateY(0px);
+		opacity: 1;
+	}
+}
+
+/*界面背景颜色细节处理*/
+.st-color {
+	background-color: #fa96b5;
+
+}
+.st-color .st-desc {
+	background-color: #fff;
+}
+.st-color [data-icon]:after {
+	color: #fa96b5;
+}
+.st-color h2 {
+	color: #fff;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+}
+.st-color p {
+	color: rgba(255,255,255,0.8);
+}
+
+/*到此为止，无自适应，即浏览器窗口变化，里面的内容不会随之缩放*/
+/*需要响应式来实现，即根据不同设备来显示内容*/
+/*当屏幕分辨率在520px以下时，希望页面发生哪些改变*/
+@media screen and (max-width: 520px){
+	.st-panel h2 {
+		font-size: 42px;
+	}
+	.st-panel p {
+		width: 90%;
+		left: 10%;
+		margin-top: 0;
+	}
+	.st-container > a {
+		font-size: 13px;
+	}
+}
+@media screen and (max-width: 360px){
+	.st-panel h2 {
+		font-size: 30px;
+	}
+	.st-container > a {
+		font-size: 10px;
+	}
+	.st-desc {
+		width: 120px;
+		height: 120px;
+		margin-left: -60px;
+	}
+	[data-icon]:after {
+		font-size: 60px;
+		-webkit-transform: rotate(-45deg) translateY(15%);
+		-moz-transform:  rotate(-45deg) translateY(15%);
+		-o-transform:  rotate(-45deg) translateY(15%);
+		-ms-transform:  rotate(-45deg) translateY(15%);
+		transform:  rotate(-45deg) translateY(15%);
+	}
+}

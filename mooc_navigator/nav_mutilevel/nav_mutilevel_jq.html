@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>实现多级菜单</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="nav_mutilevel.css" />
+	<script type="text/javascript" src="jQuery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("li").has("ul").mouseover(function(){
+				$(this).children("ul").css("display", "block");
+			}).mouseout(function(){
+				$(this).children("ul").css("display", "none");
+			})
+		});
+	</script>
+
+</head>
+<body>
+
+<ul class="top-nav">
+	<li><a href="#">首页</a></li>
+	<li><a href="#">课程大厅</a></li>
+	<li><a href="#">学习中心+</a>
+		<ul>
+			<li><a href="#">前端课程+</a>
+				<ul>
+					<li><a href="#">javascript</a></li>
+					<li><a href="#">css</a></li>
+					<li><a href="#">jquery</a></li>
+				</ul>
+			</li>
+			<li><a href="#">手机开发+</a>
+				<ul>
+					<li><a href="#">ios开发</a></li>
+					<li><a href="#">Android开发</a></li>
+					<li><a href="#">WP开发</a></li>
+				</ul>
+			</li>
+			<li><a href="#">后台编程</a></li>
+		</ul>
+	</li>
+	<li><a href="#">关于我们</a></li>
+</ul>
+
+</body>
+</html>

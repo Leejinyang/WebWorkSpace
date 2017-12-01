@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>canvas动画</title>
+	<meta charset="utf-8" />
+	<style type="text/css">
+		*{
+			margin: 0;
+		}
+	</style>
+	<script type="text/javascript">
+		var context;
+		var width,heigth;
+		var i;
+		function draw(id) {
+			var canvas = document.getElementById(id);
+			context = canvas.getContext("2d");
+			width = canvas.width;
+			height = canvas.height;
+			setInterval(painting, 100);
+			i = 0;
+		}
+		function painting(){
+			// context.fillStyle = "green";
+			// context.fillRect(i,i,10,10);
+			// context.fillRect(400-i,400-i,10,10);
+			// i++;
+
+			context.fillStyle = "green";
+			context.fillRect(0,0,width,height);
+			// 把整个画布擦除；
+			context.clearRect(10,10,width-20,height-20);
+			context.fillStyle = "red";
+			context.fillRect(i,20,10,10);
+			i+=20;
+		}
+	</script>
+</head>
+<body onload="draw('canvas')">
+<canvas id="canvas" width="400" height="400"></canvas>
+</body>
+</html>

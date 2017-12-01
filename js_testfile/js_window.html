@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<title>js window</title>
+	<meta charset="utf-8" />
+	<meta name="keyword" content="navigator" />
+	<meta name="author" content="lee" />
+	<meta name="date" content="2017/10/18" />
+	<meta name="generator" content="sublime text 3" />
+	<style type="text/css">
+		* {
+			font-family: "微软雅黑";
+		}
+	</style>
+</head>
+<body> 
+	
+<p id="demo"></p>
+<p id="demo1"></p>
+<p id="demo2"></p>
+
+<input type="button" value="newpage" onclick="newDoc()" />
+<input type="button" value="back" onclick="goBack()" />
+<input type="button" value="forward" onclick="goForward()" />
+
+<div id="example"></div>
+
+<form>
+<input type="button" value="开始计时！" onClick="timedCount()">
+<input type="text" id="txt">
+<input type="button" value="停止计时！" onClick="stopCount()">
+</form>
+
+<script>
+//window
+var w=window.innerWidth;
+var h=window.innerHeight;
+document.getElementById("demo").innerHTML = "width:" + w + " height:" + h;
+
+//screen
+w=screen.availWidth;
+h=screen.availHeight;
+document.getElementById("demo1").innerHTML = "width:" + w + " height:" + h;
+
+//location
+var hostname = location.hostname;
+var pathname = location.pathname;
+var port = location.port;
+var protocol = location.protocol;
+document.getElementById("demo2").innerHTML = location.href+"<br>" + pathname;
+
+//history
+function newDoc(){
+	location.assign("http://www.w3school.com.cn");
+}
+function goBack(){
+	window.history.back();
+}
+function goForward(){
+	window.history.forward();
+}
+
+//navigator
+txt = "<p>Browser CodeName: " + navigator.appCodeName + "</p>";
+txt+= "<p>Browser Name: " + navigator.appName + "</p>";
+txt+= "<p>Browser Version: " + navigator.appVersion + "</p>";
+txt+= "<p>Cookies Enabled: " + navigator.cookieEnabled + "</p>";
+txt+= "<p>Platform: " + navigator.platform + "</p>";
+txt+= "<p>User-agent header: " + navigator.userAgent + "</p>";
+txt+= "<p>User-agent language: " + navigator.systemLanguage + "</p>";
+document.getElementById("example").innerHTML=txt;
+
+//timing
+var c=0;
+var t;
+function timedCount(){
+	 document.getElementById('txt').value=c;
+	 c=c+1;
+	 t=setTimeout("timedCount()",1000);
+}
+function stopCount(){
+	c=0;
+	document.getElementById('txt').value=c;
+ 	clearTimeout(t);
+ }
+
+</script>
+
+</body>

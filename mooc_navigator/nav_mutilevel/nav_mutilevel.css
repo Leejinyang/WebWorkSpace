@@ -1,0 +1,62 @@
+/*global*/
+* {
+	margin: 0;
+	padding: 0;
+}
+a {
+	text-decoration: none;
+}
+li {
+	list-style: none;
+}
+
+/*navigator*/
+.top-nav {
+	font-size: 12px;
+	font-weight: 900;
+	list-style: none;
+}
+
+.top-nav li {
+	float: left;
+	margin-left: 1px;
+}
+
+.top-nav li a {
+	line-height: 20px;
+	background-color: #ddd;
+	color: #666;
+	display: block;
+	width: 80px;
+	text-align: center;
+}
+
+.top-nav li a:hover {
+	background-color: #900;
+	color: #fff;
+} 
+
+.top-nav li ul {
+	display: none;
+	width: 80px;
+	position: relative;
+}
+
+.top-nav li ul li ul {
+	position: absolute;
+	left: 80px;
+	top: 0;
+}
+
+/*.top-nav li:hover ul {
+	display: block;
+
+}
+
+.top-nav li:hover ul li ul {
+	display: none;
+}
+
+.top-nav li:hover ul li:hover ul{
+	display: block;
+}*/

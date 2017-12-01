@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>简单的留言板</title>
+	<meta charset="utf-8">
+</head>
+<body>
+
+<h1>message borad</h1>
+<textarea id="dome" cols="60" rows="10"></textarea>
+<br />
+<input type="button" name="save" value="save" onclick="saveStorage('dome')" />
+<input type="button" name="delete" value="delete" onclick="clearStorage('msg')" />
+<input type="button" name="load" value="load" onclick="loadStorage('msg')" />
+<hr />
+<p id="msg"></p>
+
+<script type="text/javascript" src="messbd.js"></script>
+</body>
+</html>
